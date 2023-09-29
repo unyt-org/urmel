@@ -39,8 +39,6 @@ export function fitText(text:string, options: fitTextOptions) {
 	options.newLineCharacter ??= "\n";
 
 
-	console.log("opts", options)
-
 	if (options.strategy == "trim") 
 		return trimText(text, options as normalizedFitTextOptions);
 	if (options.strategy == "ellipsis") 
@@ -52,11 +50,11 @@ export function fitText(text:string, options: fitTextOptions) {
 
 function getLineOptions(options: normalizedFitTextOptions, lineNr: number) {
 	const lineOptions = {
-		lineWidth: typeof options.lineWidth == "number" ? options.lineWidth : options.lineWidth(lineNr),
-		paddingLeft: typeof options.paddingLeft == "number" ? options.paddingLeft : options.paddingLeft(lineNr),
-		paddingRight: typeof options.paddingRight == "number" ? options.paddingRight : options.paddingRight(lineNr),
-		lineStartMark: typeof options.lineStartMark == "string" ? options.lineStartMark : options.lineStartMark(lineNr),
-		lineEndMark: typeof options.lineEndMark == "string" ? options.lineEndMark : options.lineEndMark(lineNr),
+		lineWidth: typeof options.lineWidth == "number" ? options.lineWidth : options.lineWidth?.(lineNr),
+		paddingLeft: typeof options.paddingLeft == "number" ? options.paddingLeft : options.paddingLeft?.(lineNr),
+		paddingRight: typeof options.paddingRight == "number" ? options.paddingRight : options.paddingRight?.(lineNr),
+		lineStartMark: typeof options.lineStartMark == "string" ? options.lineStartMark : options.lineStartMark?.(lineNr),
+		lineEndMark: typeof options.lineEndMark == "string" ? options.lineEndMark : options.lineEndMark?.(lineNr),
 	} as lineSpecificOptions;
 
 	if (lineOptions.lineWidth==undefined) throw new Error("lineWidth required");
@@ -142,6 +140,7 @@ function wrapText(text: string, options:normalizedFitTextOptions) {
 
 			}
 
+			// TODO: fix slice - better: implement wrapping without color/ANSI codes + apply afterwards
 			text = line.slice(lineOptions.innerWidth-shift)
 			line = (line).slice(0, lineOptions.innerWidth-shift)+hyphen;
 

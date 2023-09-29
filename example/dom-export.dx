@@ -1,0 +1,14 @@
+<html/div> {
+   style: {color: "green"},
+   attr: {id: "helloWorld"},
+   content: [
+      $$ <html/a> {
+         attr: {href: "https://unyt.org"},
+         content: "Hello World 1"
+      },
+      $$ <html/a> {
+         attr: {href: "file:///Users/benedikt/PROJECTS/unyt/urmel/example/"},
+         content: "Hello World 2"
+      }
+   ]
+};
