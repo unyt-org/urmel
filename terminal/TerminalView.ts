@@ -1,5 +1,5 @@
 import { logger } from "datex-core-js-legacy/datex_all.ts";
-import { Element } from "../uix-dom/dom/Element.ts";
+import { Element } from "../uix-dom/dom/mod.ts";
 import { fitText } from "../rendering/fitText.ts";
 import { hideCursor, showCursor } from "https://denopkg.com/iamnathanj/cursor@v2.2.0/mod.ts";
 
@@ -14,7 +14,7 @@ export class TerminalView {
 	}
 
 	show() {
-		hideCursor();
+		// hideCursor();
 		this.render()
 
 		Deno.addSignalListener("SIGWINCH", () => {

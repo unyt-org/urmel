@@ -1,5 +1,4 @@
 import { enableDatexBindings } from "../uix-dom/datex-bindings/mod.ts";
-import { DOMContext } from "../uix-dom/dom/DOMContext.ts";
+import * as denoDomContext from "../uix-dom/dom/mod.ts";
 
-export const domContext = new DOMContext();
-export const domUtils = enableDatexBindings(domContext)
+export const domUtils = enableDatexBindings(denoDomContext)
