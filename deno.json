@@ -1,0 +1,19 @@
+{
+    "imports": {
+        "datex-core-js-legacy/": "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/",
+        "datex-core-js-legacy": "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/datex.ts",
+		"uix/": "https://cdn.unyt.org/uix@0.0.11/",
+		"uix": "https://cdn.unyt.org/uix@0.0.11/uix.ts",
+		"unyt_core/": "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/",
+        "unyt_core": "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/datex.ts",
+        "urmel/jsx-runtime": "./jsx-runtime/jsx.ts",
+        "unyt_tests/": "https://cdn.unyt.org/unyt_tests/"
+    },
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "urmel",
+        "lib": [
+            "deno.window"
+        ]
+    }
+}
