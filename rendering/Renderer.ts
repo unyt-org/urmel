@@ -1,5 +1,5 @@
 import { clearScreen } from "https://deno.land/x/ansi@1.0.1/clear.ts";
-import { ContentBox } from "./ContentBox.ts";
+import { Char, ContentBox } from "./ContentBox.ts";
 import { InputHandler, KeyDownEvent } from "./input/InputHandler.ts";
 import { clearTerminal, cursorTo, link } from "https://deno.land/x/ansi@1.0.1/mod.ts";
 import { ESC } from "https://deno.land/x/ansi@1.0.1/constants.ts";
@@ -113,20 +113,25 @@ export class Renderer {
 	}
 
 	renderContentBox(box: ContentBox) {
-		const dirtyChars = box.getBubbledDirtyChars();
-		for (const [y,x,dirty] of dirtyChars) {
-			if (!dirty) continue;
-			else {
+		const markedChars = box.getBubbledMarkedChars()
+		for (const [y,x,dirty] of markedChars) {
+
+			if (dirty) {
 				const char = box.getDirtyCharAt(y, x);
-				// if (char) {
-					console.log(y,x,char?.value)
-					// this.write(ESC + (1) + ";" + (x + 1) + "H"+"O")
-					// cursorTo(x, y);
-					this.write(ESC + (y + this.offsetTop + 1) + ";" + (x + 1) + "H")
-					this.write(char?.value??"?")
-				// }
+				if (char) {
+					this.printChar(x,y,char)
+				}
 			}
 		}
+	}
+
+	printChar(x:number, y:number, char:Char) {
+		this.write(ESC + (y + this.offsetTop + 1) + ";" + (x + 1) + "H")
+		if ('background-color' in char.params) {
+			this.write("\u001b[44m")
+		}
+		this.write(char.value)
+		this.write("\u001b[0m")
 	}
 
 	write(text:string) {
@@ -134,7 +139,7 @@ export class Renderer {
 	}
 
 	renderContentBoxDirtyChars(box: ContentBox) {
-		const dirtyChars = box.getBubbledDirtyChars();
+		const dirtyChars = box.getBubbledMarkedChars();
 		console.log(dirtyChars.toString())
 	}
 

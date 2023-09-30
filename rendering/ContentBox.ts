@@ -23,7 +23,7 @@ export class ContentBox  {
 	#rows: number;
 	#cols: number;
 	#chars: Char[][];
-	#dirtyChars!: BitMatrix // 1 is dirty, 0 is unchanged
+	#markedChars!: BitMatrix // 1 is dirty, 0 is unchanged
 	#children:ContentBox[] = []
 
 	#isDirty = true;
@@ -40,7 +40,7 @@ export class ContentBox  {
 	resize(rows: number, cols: number) {
 		this.#rows = rows;
 		this.#cols = cols;
-		this.#dirtyChars = new BitMatrix(rows, cols).fill(1);
+		this.#markedChars = new BitMatrix(rows, cols).fill(1);
 
 		for (let rowNr = 0; rowNr<rows; rowNr++) {
 			const row = [];
@@ -51,12 +51,12 @@ export class ContentBox  {
 		}
 	}
 
-	get dirtyChars() {
-		return this.#dirtyChars
+	get markedChars() {
+		return this.#markedChars
 	}
 
 	charAt(globalX:number, globalY:number) {
-		return this.#chars[globalY]?.[globalX]
+		return this.#chars[globalY-this.y]?.[globalX-this.x]
 	}
 
 	appendChild(child: ContentBox) {
@@ -65,7 +65,7 @@ export class ContentBox  {
 	}
 
 	getDirtyCharAt(globalY: number, globalX: number): Char|null {
-		if (this.#dirtyChars.get(globalY,globalX)) return this.charAt(globalX,globalY)
+		if (this.#markedChars.get(globalY-this.y, globalX-this.x)) return this.charAt(globalX,globalY)
 		else {
 			for (const child of this.#children) {
 				const dirtyChar = child.getDirtyCharAt(globalY, globalX);
@@ -75,14 +75,14 @@ export class ContentBox  {
 		return null;
 	}
 
-	getBubbledDirtyChars(parentWidth = this.#x + this.#cols): BitMatrix {
-		const childrenDirtyChars = this.#children.map(c=>c.getBubbledDirtyChars(parentWidth));
+	getBubbledMarkedChars(parentWidth = this.#x + this.#cols): BitMatrix {
+		const childrenDirtyChars = this.#children.map(c=>c.getBubbledMarkedChars(parentWidth));
 
 		// console.log("->\n"+childrenDirtyChars[0]);
 		return new BitMatrix(
 			this.#y + this.#rows,
 			parentWidth,
-			BitMatrix.or(...childrenDirtyChars, this.#dirtyChars.getDataShiftedAndResized(this.#x, this.#y, parentWidth))
+			BitMatrix.or(...childrenDirtyChars, this.#markedChars.getDataShiftedAndResized(this.#x, this.#y, parentWidth))
 		);
 	}
 

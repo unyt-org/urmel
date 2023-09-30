@@ -12,15 +12,15 @@ export class Browser {
 	constructor(public renderer = Renderer.getDefaultRenderer()) {
 
 		const documentBox = new ContentBox(0, 0, 20, 40);
-		documentBox.dirtyChars.fill(0);
-		documentBox.dirtyChars.set(0,0,1);
+		documentBox.markedChars.fill(0);
+		documentBox.markedChars.set(0,0,1);
 		documentBox.appendChild(new ContentBox(5, 5, 5, 12))
 		documentBox.appendChild(new ContentBox(8, 10, 6, 19))
 
 		let x = 0;
 		let y = 0;
 		setInterval(()=>{
-			documentBox.dirtyChars.set(y%20,(x++)%40,1);
+			documentBox.markedChars.set(y%20,(x++)%40,1);
 			renderer.renderAll()
 			if (x%40 == 0) y++;
 		}, 40)
