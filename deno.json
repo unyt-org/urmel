@@ -15,5 +15,10 @@
         "lib": [
             "deno.window"
         ]
-    }
+    },
+
+	"tasks": {
+		"example1": "deno run -A example/example1.tsx",
+		"example2": "deno run -A example/example2.tsx"
+	}
 }

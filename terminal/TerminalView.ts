@@ -1,3 +1,4 @@
+import "../app/context.ts";
 import { logger } from "datex-core-js-legacy/datex_all.ts";
 import { Element } from "../uix-dom/dom/mod.ts";
 import { fitText } from "../rendering/fitText.ts";

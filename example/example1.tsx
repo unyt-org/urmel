@@ -1,5 +1,4 @@
 import { logger } from "unyt_core/datex_all.ts";
-import "../app/context.ts";
 import { TerminalView } from "../terminal/TerminalView.ts";
 
 const div = 
