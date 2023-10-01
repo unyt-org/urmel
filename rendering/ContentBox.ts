@@ -45,7 +45,7 @@ export class ContentBox  {
 		for (let rowNr = 0; rowNr<rows; rowNr++) {
 			const row = [];
 			for (let colNr = 0; colNr<cols; colNr++) {
-				row.push(new Char("x"))
+				row.push(new Char(" "))
 			}
 			this.#chars.push(row)
 		}
@@ -55,8 +55,8 @@ export class ContentBox  {
 		return this.#markedChars
 	}
 
-	charAt(globalX:number, globalY:number) {
-		return this.#chars[globalY-this.y]?.[globalX-this.x]
+	charAt(windowX:number, windowY:number) {
+		return this.#chars[windowY-this.y]?.[windowX-this.x]
 	}
 
 	appendChild(child: ContentBox) {
@@ -64,11 +64,11 @@ export class ContentBox  {
 		this.#children.push(child)
 	}
 
-	getDirtyCharAt(globalY: number, globalX: number): Char|null {
-		if (this.#markedChars.get(globalY-this.y, globalX-this.x)) return this.charAt(globalX,globalY)
+	getDirtyCharAt(windowY: number, windowX: number): Char|null {
+		if (this.#markedChars.get(windowY-this.y, windowX-this.x)) return this.charAt(windowX,windowY)
 		else {
 			for (const child of this.#children) {
-				const dirtyChar = child.getDirtyCharAt(globalY, globalX);
+				const dirtyChar = child.getDirtyCharAt(windowY, windowX);
 				if (dirtyChar) return dirtyChar;
 			}
 		}

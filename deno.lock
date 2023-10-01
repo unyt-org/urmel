@@ -7,6 +7,7 @@
   },
   "remote": {
     "https://cdn.jsdelivr.net/gh/speed-highlight/core/dist/index.js": "3f06bcb851f0ad78de4ab1886611d1253a57d875c287a93ae92efa80c5e7593b",
+    "https://cdn.unyt.org/command-line-args/main.ts": "daa4a6fa6185d828ca885a8d20617ca4b121fc987f9f898a64b432a8a0a09658",
     "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/compiler/binary_codes.ts": "e04ac5aea360036675c81127146e92d200fca75ae8f8dc53a3d40ca80f5fa31b",
     "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/compiler/compiler.ts": "01dbfef1a9477b525943dc6bf46251b4df3d240a7e96f84a8d867a20a4e7b4a0",
     "https://cdn.unyt.org/datex-core-js-legacy@0.0.7/compiler/protocol_types.ts": "98114be167ae672773d6176b6014e1710838d6bcb81a3686c1525e95e18fb815",

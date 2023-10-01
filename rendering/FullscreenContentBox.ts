@@ -1,34 +1,13 @@
 import { ContentBox } from "./ContentBox.ts";
+import { Window } from "./Window.ts";
 
 export class FullscreenContentBox extends ContentBox {
 	
+	constructor(private window: Window) {
+		super(0, 0, window.innerHeight-10, window.innerWidth);
 
-	constructor() {
-		super(0, 0, FullscreenContentBox.windowHeight-10, FullscreenContentBox.windowWidth);
-
-		Deno.addSignalListener("SIGWINCH", () => {
-			this.resize(FullscreenContentBox.windowHeight-10, FullscreenContentBox.windowWidth)
-	   	});
-	}
-
-	static DEFAULT_WIDTH = 100
-	static DEFAULT_HEIGHT = 80
-
-	static get windowWidth() {
-		try {
-			return Deno.consoleSize().columns
-		} 
-		catch {
-			return this.DEFAULT_WIDTH
-		}
-	}
-
-	static get windowHeight() {
-		try {
-			return Deno.consoleSize().rows
-		} 
-		catch {
-			return this.DEFAULT_WIDTH
-		}
+		this.window.addEventListener("resize", ()=>{
+			this.resize(this.window.innerHeight-10, this.window.innerWidth)
+		})
 	}
 }
